@@ -27,7 +27,7 @@ class Search {
         .get(
           `https://api.stackexchange.com/2.2/search/advanced?pagesize=100&order=desc&tagged=${dependenciesFilter.join(
             ";"
-          )}&sort=activity&title=${value}&site=stackoverflow`
+          )}&sort=activity&q=${value}&site=stackoverflow`
         )
         .then((response) => {
           console.log("response abaixo");
