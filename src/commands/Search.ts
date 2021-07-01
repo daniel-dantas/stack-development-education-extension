@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { Terminal, window } from "vscode";
-import axios from "axios";
+import api from "../service/api";
 import { NodeDependenciesProvider } from "./NodeDependenciesProvider";
 
 class Search {
@@ -22,13 +22,18 @@ class Search {
       .map((dependecy) => dependecy.label)
       .filter((value) => !value.startsWith("@"));
 
+      // .get(
+      //   `https://api.stackexchange.com/2.2/search/advanced?pagesize=100&order=desc&tagged=${dependenciesFilter.join(
+      //     ";"
+      //   )}&sort=activity&q=${value}&site=stackoverflow`
+      // )
+
     if (value) {
-      axios
-        .get(
-          `https://api.stackexchange.com/2.2/search/advanced?pagesize=100&order=desc&tagged=${dependenciesFilter.join(
-            ";"
-          )}&sort=activity&q=${value}&site=stackoverflow`
-        )
+      api
+        .post("/search", {
+          search: value,
+          tags: dependenciesFilter
+        })
         .then((response) => {
           console.log("response abaixo");
           console.log(response);
@@ -44,7 +49,7 @@ class Search {
                 <body>
                 <h3>Search List</h3>
                 <ul>
-                ${(response.data.items as any[]).map((value) => {
+                ${(response.data.data as any[]).map((value) => {
                   return `<li><a href="${value.link}">${value.title}</a></li>`;
                 })}
                 </ul>
