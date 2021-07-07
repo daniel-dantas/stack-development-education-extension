@@ -4,6 +4,11 @@ import api from "../service/api";
 import { NodeDependenciesProvider } from "./NodeDependenciesProvider";
 
 class Search {
+  
+  private static navigatePanel (panel1: vscode.WebviewPanel, panel2: vscode.WebviewPanel) {
+    panel1.dispose();
+  }
+  
   public static async getResult() {
     const options: vscode.InputBoxOptions = {
       placeHolder: "Search",
@@ -29,34 +34,34 @@ class Search {
       // )
 
     if (value) {
-      api
+      const response = await api
         .post("/search", {
           search: value,
           tags: dependenciesFilter
-        })
-        .then((response) => {
-          console.log("response abaixo");
-          console.log(response);
-          const panel = vscode.window.createWebviewPanel(
-            "webview",
-            "Search Problems",
-            vscode.ViewColumn.Two,
-            {}
-          );
-
-          panel.webview.html = `
-              <html>
-                <body>
-                <h3>Search List</h3>
-                <ul>
-                ${(response.data.data as any[]).map((value) => {
-                  return `<li><a href="${value.link}">${value.title}</a></li>`;
-                })}
-                </ul>
-                </body>
-              </html>
-            `;
         });
+
+        console.log("response abaixo");
+        console.log(response);
+        const panel = vscode.window.createWebviewPanel(
+          "webview",
+          "Search Problems",
+          vscode.ViewColumn.Two,
+          {}
+        );
+
+        panel.webview.html = `
+            <html>
+              <body>
+              <h3>Search List</h3>
+              <ul>
+              ${(response.data.data as any[]).map((value) => {
+                return `<li><a href="${value.link}">${value.title}</a></li>`;
+              })}
+              </ul>
+              </body>
+            </html>
+          `;
+
     }
   }
 }
