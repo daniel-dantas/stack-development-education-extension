@@ -1,4 +1,4 @@
-# extension-teste README
+# Stack Development Education Extension README
 
 This is the README for your extension "extension-teste". After writing up a brief description, we recommend including the following sections.
 
