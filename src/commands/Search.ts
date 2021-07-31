@@ -47,7 +47,10 @@ class Search {
           "webview",
           "Search Problems",
           vscode.ViewColumn.Two,
-          {}
+          {
+            enableScripts: true,
+            
+          }
         );
         
         (response.data.data as any[]).sort((post1, post2) => post2.score - post1.score);
@@ -65,17 +68,13 @@ class Search {
           )
 				)
 				.toString("utf8");
-        
-        handlebars.registerHelper("teste_function", () => {
-          return () => {
-            panel.dispose();
-          };
-        });
+      
 
         const viewTemplate = handlebars.compile(templateFileContent);
         const html = viewTemplate({
           data: response.data.data,
         });
+        
 
         panel.webview.html = html;
     }

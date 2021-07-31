@@ -48,6 +48,7 @@
             background-color: #424242;
             border-radius: 5px;
             margin-bottom: 10px;
+            cursor: pointer;
         }
 
         .body-search .item-post .score {
@@ -69,7 +70,6 @@
             width: 100%;
             color: #fff;
             border-radius: 10px;
-
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -84,18 +84,28 @@
         .body-search .item-post .content-info span {
             margin-top: 5px;
         }
+
+        #post-detail-frame{
+            margin: 0px;
+            padding: 0px;
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            border: none
+        }
     </style>
 </head>
 
 <body>
-    <div class="content">
+    <iframe id="post-detail-frame" style="display: none;" src="">
+    </iframe>
+    <div id="load-page" class="content">
         <div class="header-search">
             <input type="text" placeholder="Search">
         </div>
         <div class="body-search">
-            
             {{#each data}}
-                <div class="item-post" onclick="{{teste_function}}">
+                <div class="item-post" onclick="document.getElementById('load-page').setAttribute('style', 'display: none;'); document.getElementById('post-detail-frame').setAttribute('src', 'http://localhost:8000/api/v1/post/{{this.question_id}}'); document.getElementById('post-detail-frame').setAttribute('style', 'display: block;');" >
                     <div class="score">
                         <span><b>{{this.score}}</b></span>
                         <span>Score</span>
