@@ -49,11 +49,11 @@ class Search {
           vscode.ViewColumn.Two,
           {
             enableScripts: true,
-            
+
           }
         );
         
-        (response.data.data as any[]).sort((post1, post2) => post2.score - post1.score);
+        // (response.data.data as any[]).sort((post1, post2) => post2.score - post1.score);
 
         const templateFileContent = fs
 				.readFileSync(
