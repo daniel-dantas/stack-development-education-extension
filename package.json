@@ -1,6 +1,6 @@
 {
-	"name": "extension-teste",
-	"displayName": "extension-teste",
+	"name": "stack-development-education",
+	"displayName": "stack-development-education",
 	"description": "",
 	"version": "0.0.1",
 	"engines": {
@@ -10,20 +10,20 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension-teste.helloWorld",
-		"onCommand:extension-teste.getResult"
+		"onCommand:stack-development-education.helloWorld",
+		"onCommand:stack-development-education.getResult"
 	],
 	"main": "./out/extension.js",
 	"keywords": [],
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension-teste.helloWorld",
+				"command": "stack-development-education.helloWorld",
 				"title": "Hello World"
 			},
 			{
 				"key": "ctrl+alt+a",
-				"command": "extension-teste.getResult",
+				"command": "stack-development-education.getResult",
 				"title": "getResult"
 			},
 			{
@@ -34,7 +34,7 @@
 		],
 		"keybindings": [
 			{
-				"command": "extension-teste.getResult",
+				"command": "stack-development-education.getResult",
 				"key": "ctrl+alt+a"
 			}
 		]
