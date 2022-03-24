@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   let disposable = vscode.commands.registerCommand(
-    "extension-teste.helloWorld",
+    "stack-development-education.helloWorld",
     () => {
       // Display a message box to the user
       vscode.window.showInformationMessage("Hello World from extension-teste!");
@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   let searchItem = vscode.commands.registerCommand(
-    "extension-teste.getResult",
+    "stack-development-education.getResult",
     Search.getResult
   );
 

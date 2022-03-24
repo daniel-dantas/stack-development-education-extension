@@ -2,8 +2,20 @@ import * as vscode from "vscode";
 import { Terminal, window } from "vscode";
 import api from "../service/api";
 import { NodeDependenciesProvider } from "./NodeDependenciesProvider";
-
+import axios from "axios";
+import * as fs from "fs";
+import { resolve } from "path";
+import * as handlebars from "handlebars";
 class Search {
+
+  private static teste() {
+    console.log("teste");
+  }  
+
+  private static navigatePanel (panel1: vscode.WebviewPanel, panel2: vscode.WebviewPanel) {
+    panel1.dispose();
+  }
+  
   public static async getResult() {
     const options: vscode.InputBoxOptions = {
       placeHolder: "Search",
@@ -22,41 +34,49 @@ class Search {
       .map((dependecy) => dependecy.label)
       .filter((value) => !value.startsWith("@"));
 
-      // .get(
-      //   `https://api.stackexchange.com/2.2/search/advanced?pagesize=100&order=desc&tagged=${dependenciesFilter.join(
-      //     ";"
-      //   )}&sort=activity&q=${value}&site=stackoverflow`
-      // )
-
     if (value) {
-      api
+      const response = await api
         .post("/search", {
           search: value,
           tags: dependenciesFilter
-        })
-        .then((response) => {
-          console.log("response abaixo");
-          console.log(response);
-          const panel = vscode.window.createWebviewPanel(
-            "webview",
-            "Search Problems",
-            vscode.ViewColumn.Two,
-            {}
-          );
-
-          panel.webview.html = `
-              <html>
-                <body>
-                <h3>Search List</h3>
-                <ul>
-                ${(response.data.data as any[]).map((value) => {
-                  return `<li><a href="${value.link}">${value.title}</a></li>`;
-                })}
-                </ul>
-                </body>
-              </html>
-            `;
         });
+
+        console.log("response abaixo");
+        console.log(response);
+        const panel = vscode.window.createWebviewPanel(
+          "webview",
+          "Search Problems",
+          vscode.ViewColumn.Two,
+          {
+            enableScripts: true,
+
+          }
+        );
+        
+        // (response.data.data as any[]).sort((post1, post2) => post2.score - post1.score);
+
+        const templateFileContent = fs
+				.readFileSync(
+          resolve(
+            __dirname,
+            "..",
+            "..",
+            "src",
+            "View",
+            "templates",
+            "SearchResult.template.hbs"
+          )
+				)
+				.toString("utf8");
+      
+
+        const viewTemplate = handlebars.compile(templateFileContent);
+        const html = viewTemplate({
+          data: response.data.data,
+        });
+        
+
+        panel.webview.html = html;
     }
   }
 }
