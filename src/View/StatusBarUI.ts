@@ -9,7 +9,7 @@ export class StatusBarUI {
       100
     );
     StatusBarUI.statusBarItem.text = "Search Question";
-    StatusBarUI.statusBarItem.command = "extension-teste.getResult";
+    StatusBarUI.statusBarItem.command = "stack-development-education.getResult";
 
     StatusBarUI.statusBarItem.show();
 
